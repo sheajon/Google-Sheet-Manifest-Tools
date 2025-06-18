@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      function submitSelection() {
+        var sources = [];
+        document.querySelectorAll('input[name="source"]:checked').forEach(cb => sources.push(cb.value));
+        var destination = document.getElementById('destination').value;
+        google.script.run.withSuccessHandler(() => google.script.host.close())
+          .processSheetSelection(sources, destination);
+      }
+      function populateSheets(sheets) {
+        var sourceList = document.getElementById('sourceList');
+        var destSelect = document.getElementById('destination');
+        sheets.forEach(function(name) {
+          // Source checkboxes
+          var label = document.createElement('label');
+          var cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.name = 'source';
+          cb.value = name;
+          label.appendChild(cb);
+          label.appendChild(document.createTextNode(name));
+          sourceList.appendChild(label);
+          sourceList.appendChild(document.createElement('br'));
+          // Destination dropdown
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.text = name;
+          destSelect.appendChild(opt);
+        });
+      }
+      // On load, get sheet names
+      google.script.run.withSuccessHandler(populateSheets).getSheetNames();
+    </script>
+  </head>
+  <body>
+    <h3>Select Source Sheets:</h3>
+    <div id="sourceList"></div>
+    <h3>Select Destination Sheet:</h3>
+    <select id="destination"></select>
+    <br><br>
+    <button onclick="submitSelection()">Submit</button>
+  </body>
+</html>
