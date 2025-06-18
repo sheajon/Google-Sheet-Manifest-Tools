@@ -1,2 +1,3 @@
-# Google-Sheet-Manifest-Tools
-Google App script for importing multiple manifest sheets into one.
+# Google Sheet Manifest Tools
+Google Apps script for importing content from multiple sheets into one.
+See Excel sheet for proper layout.
